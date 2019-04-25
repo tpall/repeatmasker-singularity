@@ -66,7 +66,7 @@ From: debian:stretch
     && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar
 
   ## Run Configure Script
-  perl ./configure -trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64
+  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64
 
   ## Clean up from source install
   cd / \
