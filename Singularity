@@ -27,7 +27,7 @@ From: debian:stretch
     wget \
     build-essential \
     ca-certificates \
-    && cd tmp
+    && cd tmp/
 
   ## Download RMBlast source code
   wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
@@ -66,7 +66,7 @@ From: debian:stretch
     && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar
 
   ## Run Configure Script
-  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64
+  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/rmblast
 
   ## Clean up from source install
   cd / \
