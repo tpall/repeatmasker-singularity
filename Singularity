@@ -23,8 +23,11 @@ From: debian:stretch
 
  # Get build dependencies
   apt-get update \
-  && apt-get install -y --no-install-recommends wget build-essential \
-  && cd tmp
+  && apt-get install -y --no-install-recommends \
+    wget \
+    build-essential \
+    ca-certificates \
+    && cd tmp
 
   ## Download RMBlast source code
   wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
@@ -55,7 +58,7 @@ From: debian:stretch
     && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
 
   ## Download RepBase RepeatMasker Edition
-  wget --user $GIRUSER --password $GIRPASS https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
+  wget --user $GIRUSER --password $GIRPASS --ca-directory=/usr/ssl/certs https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
   cd /usr/local/RepeatMasker \
     && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
