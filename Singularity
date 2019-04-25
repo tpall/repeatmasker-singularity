@@ -27,7 +27,7 @@ From: debian:stretch
   && cd tmp
 
   ## Download RMBlast source code
-  wget -O ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
+  wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
   wget http://www.repeatmasker.org/isb-${RMB_VERSION}+-rmblast.patch.gz
   tar zxvf ncbi-blast-${RMB_VERSION}+-src.tar.gz \
     && gunzip isb-${RMB_VERSION}+-rmblast.patch.gz \
@@ -72,4 +72,3 @@ From: debian:stretch
   && apt-get autoremove -y \
   && apt-get autoclean -y \
   && rm -rf /var/lib/apt/lists/*
-  
