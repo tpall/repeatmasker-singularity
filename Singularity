@@ -58,7 +58,7 @@ From: debian:stretch
     && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
 
   ## Download RepBase RepeatMasker Edition
-  wget --user $GIRUSER --password $GIRPASS --ca-directory=/usr/ssl/certs https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
+  wget --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
   cd /usr/local/RepeatMasker \
     && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
