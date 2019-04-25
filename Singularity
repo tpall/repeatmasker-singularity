@@ -39,7 +39,7 @@ From: debian:stretch
   
   ## Configure RMBlast
   cd /tmp/ncbi-blast-${RMB_VERSION}+-src/c++
-  ./configure --with-mt --without-debug --without-krb5 --without-openssl --with-projects=scripts/projects/rmblastn/project.lst --prefix=/usr/local/rmblast
+  yes n | ./configure --with-mt --without-debug --without-krb5 --without-openssl --with-projects=scripts/projects/rmblastn/project.lst --prefix=/usr/local/rmblast
 
   ## Build and install RMBlast
   make \
