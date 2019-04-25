@@ -38,7 +38,7 @@ From: debian:stretch
     && patch -p1 < ../isb-${RMB_VERSION}+-rmblast.patch
   
   ## Configure RMBlast
-  cd c++ \
+  cd /tmp/ncbi-blast-${RMB_VERSION}+-src/c++ \
     && ./configure --with-mt --without-debug --without-krb5 --without-openssl --with-projects=scripts/projects/rmblastn/project.lst --prefix=/usr/local/rmblast
 
   ## Build and install RMBlast
@@ -66,7 +66,7 @@ From: debian:stretch
     && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar
 
   ## Run Configure Script
-  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/rmblast
+  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/bin/rmblastn
 
   ## Clean up from source install
   cd / \
