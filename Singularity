@@ -29,6 +29,9 @@ From: debian:stretch
     ca-certificates \
     && cd tmp/
 
+  # Configure term
+  export TERM=xterm
+
   ## Download RMBlast source code
   wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
   wget http://www.repeatmasker.org/isb-${RMB_VERSION}+-rmblast.patch.gz
@@ -66,12 +69,11 @@ From: debian:stretch
     && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar
 
   ## Run Configure Script
-  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/bin/rmblastn
+  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/rmblastn
 
   ## Clean up from source install
   cd / \
   && rm -rf /tmp/* \
-  && apt-get remove --purge -y $BUILDDEPS \
   && apt-get autoremove -y \
   && apt-get autoclean -y \
   && rm -rf /var/lib/apt/lists/*
