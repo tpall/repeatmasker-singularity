@@ -23,35 +23,21 @@ From: debian:stretch
 
  # Get build dependencies
   apt-get update \
-  && apt-get install -y --no-install-recommends \
-    wget \
-    build-essential \
-    ca-certificates \
-    && cd tmp/
+    && apt-get install -y --no-install-recommends wget
 
   # Configure term
   export TERM=xterm
 
-  ## Download RMBlast source code
-  wget --user anonymous --password taavi.pall@ut.ee ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
-  wget http://www.repeatmasker.org/isb-${RMB_VERSION}+-rmblast.patch.gz
-  tar zxvf ncbi-blast-${RMB_VERSION}+-src.tar.gz \
-    && gunzip isb-${RMB_VERSION}+-rmblast.patch.gz \
-    && cd ncbi-blast-${RMB_VERSION}+-src \
-    && patch -p1 < ../isb-${RMB_VERSION}+-rmblast.patch
-  
-  ## Configure RMBlast
-  cd /tmp/ncbi-blast-${RMB_VERSION}+-src/c++
-  ./configure --with-mt --without-debug --without-krb5 --without-openssl --with-projects=scripts/projects/rmblastn/project.lst --prefix=/usr/local/rmblast
-
-  ## Build and install RMBlast
-  make \
-    && make install
+  ## Download RMBlast
+  cd /tmp
+  wget http://www.repeatmasker.org/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
+  cd /usr/local \
+    && tar zxvf /tmp/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
 
   ## Download TRF
-  cd /tmp \
-    && wget http://tandem.bu.edu/trf/downloads/trf${TRF_VERSION}.linux64 \
-    && cp trf${TRF_VERSION}.linux64 /usr/local/bin/
+  cd /tmp
+  wget http://tandem.bu.edu/trf/downloads/trf${TRF_VERSION}.linux64
+  cp trf${TRF_VERSION}.linux64 /usr/local/bin/
 
   ## Download RepeatMasker
   wget http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
