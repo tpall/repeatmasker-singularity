@@ -57,7 +57,8 @@ From: debian:stretch
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
     && gunzip RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
-    && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
+    && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar \
+    && rm RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
 
   ## Download RepBase RepeatMasker Edition
   wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
@@ -65,7 +66,8 @@ From: debian:stretch
   cd /usr/local/RepeatMasker \
     && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
     && tar xvf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar
+    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
+    && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
   perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/rmblast-2.9.0/rmblastn
@@ -75,4 +77,4 @@ From: debian:stretch
   && rm -rf /tmp/* \
   && apt-get autoremove -y \
   && apt-get autoclean -y \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* 
