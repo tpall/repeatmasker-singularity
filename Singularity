@@ -33,7 +33,7 @@ From: debian:stretch
   export TERM=xterm
 
   ## Download RMBlast source code
-  wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
+  wget --no-passive-ftp ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${RMB_VERSION}/ncbi-blast-${RMB_VERSION}+-src.tar.gz
   wget http://www.repeatmasker.org/isb-${RMB_VERSION}+-rmblast.patch.gz
   tar zxvf ncbi-blast-${RMB_VERSION}+-src.tar.gz \
     && gunzip isb-${RMB_VERSION}+-rmblast.patch.gz \
