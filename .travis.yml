@@ -9,9 +9,9 @@ env:
   - secure: T2xuWg4v+7xssPOSGf7aUDkowkYIU9LW02lZv/FLTxyz6aslmjxwrn/GBeBhdfKrTK/Z7eEV+2/extzD5so8SJ5RfA0k5MsE+gJW/6sQA5LJuXckrOJBG7duWX94sxt1mTecYyRtnOFZSUfVffHbxlweLw4N3OYLRaoZ4SWFjOm0M/SAUKuCFC7rVCx/9+46tJp+N4EXaIvXr1BOU294X1A037uylmP7fKQMd1vZQzISHD67VQXLMZz0vH5EaxXZ7OmjUfpqHEK01iIBu9YvrxuDNIWR5wDejujp74GJ47bfASX5QSGPb9DUU9wu6XfpCzw6Ez+l/3rXLWTmuHClbstt2ANS0ejbGgHnzKAuQP2FqAjczf6qPHg8W5B+w1u40GUmnBP49Tupx5NzDEZmiiqK0kYV3+vnTMsgyGXEP4ZL9DB865Kuc3PCrZtg9JRidO+MolANYxndwKWGz2htX76N7I20y0Dx+yYk3q5Lr+ZELqX4hHFbdZB5eVHbq8HYqYqGRBvQk2t+AkEG1+OWNr0Qe6o5CSfZEE6fLMrO5Yk8BmptQTYEMaWsJnjO4hIgNeXP2F/n3WPnymdClONR6CmPHAUBwJypOPjWnWQJEBheSP5CTc+qlhLiJH+yUVNoJNh8+XZ4ULBfgmiklnqkvr4Hlp6dLu6uyaAqbIQHbLo=
   matrix:
   - SPEC=Singularity
+addons:
+  ssh_known_hosts: $DEPLOY_HOST
 before_install:
-- openssl aes-256-cbc -K $encrypted_704c7faabd3b_key -iv $encrypted_704c7faabd3b_iv
-  -in deploy_rsa.enc -out deploy_rsa -d
 - sudo apt-get update -qq
 - sudo apt-get install -y libarchive-dev squashfs-tools wget
 install:
@@ -30,8 +30,8 @@ notifications:
     on_success: never
     on_failure: always
 before_deploy:
-- openssl aes-256-cbc -K $encrypted_288f77d8e810_key -iv $encrypted_288f77d8e810_iv
-  -in deploy_rsa.enc -out /tmp/deploy_rsa -d
+- openssl aes-256-cbc -K $encrypted_704c7faabd3b_key -iv $encrypted_704c7faabd3b_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/deploy_rsa
 - ssh-add /tmp/deploy_rsa
