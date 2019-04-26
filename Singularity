@@ -23,16 +23,23 @@ From: debian:stretch
 
   # Get build dependencies
   apt-get update \
-    && apt-get install -y --no-install-recommends wget build-essential
+    && apt-get install -y --no-install-recommends wget build-essential locales
   
+  # Configure default locale
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen en_US.utf8
+  /usr/sbin/update-locale LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
+
+  # Configure term
+  export TERM=xterm
+
   # Install cpanm
   wget -O - http://cpanmin.us | perl - --self-upgrade
   
   # Install the Text::Soundex module via cpan:
   cpanm Text::Soundex
-
-  # Configure term
-  export TERM=xterm
 
   ## Download RMBlast
   cd /tmp
