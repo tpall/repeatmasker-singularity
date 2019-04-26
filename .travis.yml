@@ -19,7 +19,7 @@ install:
 - "./configure --prefix=/usr/local"
 - make && sudo make install
 - cd ..
-- echo 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDKGb763AN3baZ6ZvyEqnT2jYCMzLjmK+aJVfMCZt/Wh3WE8tMqiGESKzEzpx1ZLX6/XA29po7/JKJEKkvD/CQE=' >> $HOME/.ssh/known_hosts
+- echo 'rocket.hpc.ut.ee,193.40.12.243 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDKGb763AN3baZ6ZvyEqnT2jYCMzLjmK+aJVfMCZt/Wh3WE8tMqiGESKzEzpx1ZLX6/XA29po7/JKJEKkvD/CQE=' >> $HOME/.ssh/known_hosts
 before_script:
 - sudo singularity build $SINGULARITY_IMAGE $SPEC
 - chmod +x run_tests.sh
