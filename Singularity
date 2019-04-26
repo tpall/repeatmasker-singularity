@@ -21,9 +21,15 @@ From: debian:stretch
   export TRF_VERSION=${TRF_VERSION:-409}
   export REPBASE_VER=${REPBASE_VER:-20181026}
 
- # Get build dependencies
+  # Get build dependencies
   apt-get update \
-    && apt-get install -y --no-install-recommends wget build-essential cpanminus
+    && apt-get install -y --no-install-recommends wget build-essential
+  
+  # Install cpanm
+  wget -O - http://cpanmin.us | perl - --self-upgrade
+  
+  # Install the Text::Soundex module via cpan:
+  cpanm Text::Soundex
 
   # Configure term
   export TERM=xterm
@@ -45,9 +51,6 @@ From: debian:stretch
   cd /usr/local/ \
     && gunzip RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
     && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
-  
-  # Install the Text::Soundex module via cpan:
-  cpanm -S Text::Soundex
 
   ## Download RepBase RepeatMasker Edition
   wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
