@@ -50,7 +50,9 @@ From: debian:stretch
   ## Download TRF
   cd /tmp
   wget -nv http://tandem.bu.edu/trf/downloads/trf${TRF_VERSION}.linux64
-  cp trf${TRF_VERSION}.linux64 /usr/local/bin/
+  cp trf${TRF_VERSION}.linux64 /usr/local/bin/ \
+    && mv /usr/local/bin/trf${TRF_VERSION}.linux64 /usr/local/bin/trf \
+    && chmod +x /usr/local/bin/trf
 
   ## Download RepeatMasker
   wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
@@ -70,7 +72,7 @@ From: debian:stretch
     && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/rmblast-2.9.0/rmblastn
+  perl ./configure --trfbin=/usr/local/bin/ --rmblastbin=/usr/local/rmblast-2.9.0/
 
   ## Clean up from source install
   cd / \
