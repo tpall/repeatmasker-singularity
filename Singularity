@@ -9,10 +9,10 @@ From: debian:stretch
   Repbase_Version 20181026
 
 %apprun RepeatMasker
-  exec RepeatMasker "${@}"
+  exec /usr/local/RepeatMasker/RepeatMasker "${@}"
 
 %runscript
-  exec RepeatMasker "${@}"
+  exec /usr/local/RepeatMasker/RepeatMasker "${@}"
 
 %post
   # Software versions
@@ -23,31 +23,34 @@ From: debian:stretch
 
  # Get build dependencies
   apt-get update \
-    && apt-get install -y --no-install-recommends wget build-essential
+    && apt-get install -y --no-install-recommends wget build-essential cpanminus
 
   # Configure term
   export TERM=xterm
 
   ## Download RMBlast
   cd /tmp
-  wget http://www.repeatmasker.org/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
+  wget -nv http://www.repeatmasker.org/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
   cd /usr/local \
     && tar zxvf /tmp/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
 
   ## Download TRF
   cd /tmp
-  wget http://tandem.bu.edu/trf/downloads/trf${TRF_VERSION}.linux64
+  wget -nv http://tandem.bu.edu/trf/downloads/trf${TRF_VERSION}.linux64
   cp trf${TRF_VERSION}.linux64 /usr/local/bin/
 
   ## Download RepeatMasker
-  wget http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
+  wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
     && gunzip RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
     && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
+  
+  # Install the Text::Soundex module via cpan:
+  cpanm -S Text::Soundex
 
   ## Download RepBase RepeatMasker Edition
-  wget --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
+  wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
   cd /usr/local/RepeatMasker \
     && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
