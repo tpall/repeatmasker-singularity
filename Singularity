@@ -23,7 +23,7 @@ From: debian:stretch
 
  # Get build dependencies
   apt-get update \
-    && apt-get install -y --no-install-recommends wget
+    && apt-get install -y --no-install-recommends wget build-essential
 
   # Configure term
   export TERM=xterm
