@@ -37,6 +37,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --del $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@${DEPLOY_HOST}:~${DEPLOY_PATH}
+  script: rsync -r --del $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@${DEPLOY_HOST}:~/${DEPLOY_PATH}
   on:
     branch: master
