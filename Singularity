@@ -54,7 +54,7 @@ From: debian:stretch
     && mv /usr/local/bin/trf${TRF_VERSION}.linux64 /usr/local/bin/trf \
     && chmod +x /usr/local/bin/trf
 
-  ## Download RepeatMasker
+  ## Download and install RepeatMasker
   wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
@@ -62,7 +62,9 @@ From: debian:stretch
     && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar \
     && rm RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
 
-  ## Download RepBase RepeatMasker Edition
+  ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
+
+  ## Download and setup RepBase RepeatMasker Edition
   wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
   cd /usr/local/RepeatMasker \
