@@ -16,7 +16,7 @@ From: debian:stretch
 
 %post
   # Software versions
-  export RM_VERSION=${RM_VERSION:-4.0.9}
+  export RM_VERSION=${RM_VERSION:-4.0.9.p1}
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
   export TRF_VERSION=${TRF_VERSION:-409}
   export REPBASE_VER=${REPBASE_VER:-20181026}
