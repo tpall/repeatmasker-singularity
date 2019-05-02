@@ -13,7 +13,6 @@ set -e
 set -x
 
 # Run RM
-echo version()
 singularity run ${SINGULARITY_IMAGE} -v
 singularity exec ${SINGULARITY_IMAGE} /usr/local/bin/RepeatMasker test/seqs/small-1.fa
 singularity exec ${SINGULARITY_IMAGE}  /usr/local/bin/RepeatMasker test/seqs/small-2.fa
