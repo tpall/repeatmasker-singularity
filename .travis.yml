@@ -38,6 +38,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: scp -r $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@rocket.hpc.ut.ee:~/${DEPLOY_PATH}/repeatmasker$(echo $SPEC | tr -dc '0-9').simg
+  script: scp -r $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@rocket.hpc.ut.ee:~/simg/repeatmasker$(echo $SPEC | tr -dc '0-9').simg
   on:
     branch: master
