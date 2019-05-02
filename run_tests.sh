@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export SINGULARITY_IMAGE="${SINGULARITY_IMAGE:-repeatmasker-singularity.simg}"
+export SINGULARITY_IMAGE="repeatmasker-singularity.simg"
 echo "Using Singularity image: ${SINGULARITY_IMAGE}"
 
 version () {

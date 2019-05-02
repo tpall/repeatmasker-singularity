@@ -10,7 +10,6 @@ env:
   matrix:
   - SPEC=Singularity
   - SPEC=Singularity.4.0.9
-  - SPEC=Singularity.4.0.8
 before_install:
 - sudo apt-get update -qq
 - sudo apt-get install -y libarchive-dev squashfs-tools wget
