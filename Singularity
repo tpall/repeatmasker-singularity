@@ -16,23 +16,30 @@ From: debian:stretch
 
 %post
   # Software versions
-  export RM_VERSION=${RM_VERSION:-4.0.9}
+  export RM_VERSION=${RM_VERSION:-4.0.9.p1}
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
   export TRF_VERSION=${TRF_VERSION:-409}
   export REPBASE_VER=${REPBASE_VER:-20181026}
 
   # Get build dependencies
   apt-get update \
-    && apt-get install -y --no-install-recommends wget build-essential
+    && apt-get install -y --no-install-recommends wget build-essential locales
   
+  # Configure default locale
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen en_US.utf8
+  /usr/sbin/update-locale LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
+
+  # Configure term
+  export TERM=xterm
+
   # Install cpanm
   wget -O - http://cpanmin.us | perl - --self-upgrade
   
   # Install the Text::Soundex module via cpan:
   cpanm Text::Soundex
-
-  # Configure term
-  export TERM=xterm
 
   ## Download RMBlast
   cd /tmp
@@ -43,29 +50,35 @@ From: debian:stretch
   ## Download TRF
   cd /tmp
   wget -nv http://tandem.bu.edu/trf/downloads/trf${TRF_VERSION}.linux64
-  cp trf${TRF_VERSION}.linux64 /usr/local/bin/
+  cp trf${TRF_VERSION}.linux64 /usr/local/bin/ \
+    && mv /usr/local/bin/trf${TRF_VERSION}.linux64 /usr/local/bin/trf \
+    && chmod +x /usr/local/bin/trf
 
-  ## Download RepeatMasker
+  ## Download and install RepeatMasker
   wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
     && gunzip RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
-    && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
+    && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar \
+    && rm RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
 
-  ## Download RepBase RepeatMasker Edition
+  ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
+
+  ## Download and setup RepBase RepeatMasker Edition
   wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
   cd /usr/local/RepeatMasker \
     && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
     && tar xvf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar
+    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
+    && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  perl ./configure --trfbin=/usr/local/bin/trf${TRF_VERSION}.linux64 --rmblastbin=/usr/local/rmblast-2.9.0/rmblastn
+  perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-2.9.0/
 
   ## Clean up from source install
   cd / \
   && rm -rf /tmp/* \
   && apt-get autoremove -y \
   && apt-get autoclean -y \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* 

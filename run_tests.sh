@@ -13,11 +13,15 @@ set -e
 set -x
 
 # Verify RM version
+<<<<<<< HEAD
 if [ $(singularity exec ${SINGULARITY_IMAGE} RepeatMasker | head -n 1 | awk -F'-' '{print $2}') = $(version) ]
+=======
+if [ $(singularity exec ${SINGULARITY_IMAGE} -v) = $(version) ]
+>>>>>>> 66f41f8299ec38628e7f92a681db37ba15ff28ff
 then
-  echo "Versions match"
+   echo "all right, version's correct!"
 else
-  echo "Something is wrong with your test!"
+  echo "something's wrong with test"
 fi
 
 testDataDir="seqs/general/"
