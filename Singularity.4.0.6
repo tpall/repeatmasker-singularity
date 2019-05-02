@@ -75,7 +75,7 @@ From: debian:stretch
     && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  wget https://raw.githubusercontent.com/bioconda/bioconda-recipes/master/recipes/repeatmasker/RepeatMaskerConfig.pm
+  wget --no-check-certificate https://raw.githubusercontent.com/bioconda/bioconda-recipes/master/recipes/repeatmasker/RepeatMaskerConfig.pm
   perl ./configure
 
   ## Clean up from source install
