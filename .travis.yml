@@ -3,12 +3,14 @@ dist: trusty
 language: generic
 env:
   global:
-  - SINGULARITY_IMAGE=repeatmasker-singularity.simg
+  - SINGULARITY_IMAGE=repeatmasker
   - VERSION=2.6.0
   - secure: t3TWmOJk1l7ZCoXuCKaZYRW56KiRv+9VT9nxDuUSI1FeYHg5DNzsoZknr5beev3cgGaIzYa3Lrb8pWwnpw4Jdvk+Td4mhzJaPFW7lxtbgMf0bCaNzftF4ZKm0NKk0cOqxAVQGWcJbB+HL/5XuLoO3OvywyB4arTzzY/FDuFKxO4StTqCStX0+Kwv5ovpExZcRpOW0sC10tqWO92SdXyFTc3ZOJLY8ePtN4mom5LcuQVDHdPSt/T0QSW5/hKDWhLp4JW4EZnAyhk6EBgrAL5oHqmcGVDUsOCvRBcDzs117bNBsGDf14q1qFUvDQ8Qt61iOtSBkJBXMgBQiNXUpyEfpc0b91lIheJAd/Qvdb4tOFj8O2J5b5baeN+1FbWJWRD2EHqrBbJMxRpTY1tVcrmR18o1vij3ZqHSceIIQpTNuzvIRxTFRfju2+biUNU2EqLDE3Gh2Gv71+rqNxeuAQCXwCbeYDPnJl5qqoBy8Ya0XWVN6ZeWmglykB7HGz/efO/otw0oHt7qRFo7O9dv8Lw1G6WSWoq6KczMSbcNKEr4ZeO6IHBxUCGye0tRH+mXwM/YTrj5aZJAgL5ZyeyVHiei0aLlWpuDIY+M9zvg2bCg5G+f22bQMt/l2jnawxXrKVcVHaFNnDTnTpfMca0Xvz5j5HoDGu+tYYrrvpjlVBLDYrA=
   - secure: T2xuWg4v+7xssPOSGf7aUDkowkYIU9LW02lZv/FLTxyz6aslmjxwrn/GBeBhdfKrTK/Z7eEV+2/extzD5so8SJ5RfA0k5MsE+gJW/6sQA5LJuXckrOJBG7duWX94sxt1mTecYyRtnOFZSUfVffHbxlweLw4N3OYLRaoZ4SWFjOm0M/SAUKuCFC7rVCx/9+46tJp+N4EXaIvXr1BOU294X1A037uylmP7fKQMd1vZQzISHD67VQXLMZz0vH5EaxXZ7OmjUfpqHEK01iIBu9YvrxuDNIWR5wDejujp74GJ47bfASX5QSGPb9DUU9wu6XfpCzw6Ez+l/3rXLWTmuHClbstt2ANS0ejbGgHnzKAuQP2FqAjczf6qPHg8W5B+w1u40GUmnBP49Tupx5NzDEZmiiqK0kYV3+vnTMsgyGXEP4ZL9DB865Kuc3PCrZtg9JRidO+MolANYxndwKWGz2htX76N7I20y0Dx+yYk3q5Lr+ZELqX4hHFbdZB5eVHbq8HYqYqGRBvQk2t+AkEG1+OWNr0Qe6o5CSfZEE6fLMrO5Yk8BmptQTYEMaWsJnjO4hIgNeXP2F/n3WPnymdClONR6CmPHAUBwJypOPjWnWQJEBheSP5CTc+qlhLiJH+yUVNoJNh8+XZ4ULBfgmiklnqkvr4Hlp6dLu6uyaAqbIQHbLo=
   matrix:
   - SPEC=Singularity
+  - SPEC=Singularity.4.0.9
+  - SPEC=Singularity.4.0.6
 before_install:
 - sudo apt-get update -qq
 - sudo apt-get install -y libarchive-dev squashfs-tools wget
@@ -21,7 +23,7 @@ install:
 - cd ..
 - echo 'rocket.hpc.ut.ee,193.40.12.243 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDKGb763AN3baZ6ZvyEqnT2jYCMzLjmK+aJVfMCZt/Wh3WE8tMqiGESKzEzpx1ZLX6/XA29po7/JKJEKkvD/CQE=' >> $HOME/.ssh/known_hosts
 before_script:
-- sudo singularity build $SINGULARITY_IMAGE $SPEC
+- sudo singularity build $SINGULARITY_IMAGE$(echo $SPEC | tr -dc '0-9').simg $SPEC
 - chmod +x run_tests.sh
 script: "./run_tests.sh"
 notifications:
@@ -37,6 +39,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --del $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@rocket.hpc.ut.ee:~/${DEPLOY_PATH}
+  script: rsync -r --del $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE$(echo $SPEC | tr -dc '0-9').simg ${DEPLOY_USER}@rocket.hpc.ut.ee:~/${DEPLOY_PATH}
   on:
     branch: master

@@ -3,10 +3,10 @@ From: debian:stretch
 
 %labels
   Maintainer tpall
-  RM_Version 4.0.9
+  RM_Version 4.0.6
   RMBlast Version 2.9.0
-  TRF Version 4.09
-  Repbase_Version 20181026
+  TRF Version 4.04
+  Repbase_Version 20170127
 
 %apprun RepeatMasker
   exec /usr/local/RepeatMasker/RepeatMasker "${@}"
@@ -16,10 +16,10 @@ From: debian:stretch
 
 %post
   # Software versions
-  export RM_VERSION=${RM_VERSION:-4.0.9.p1}
+  export RM_VERSION=${RM_VERSION:-4.0.6}
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
-  export TRF_VERSION=${TRF_VERSION:-409}
-  export REPBASE_VER=${REPBASE_VER:-20181026}
+  export TRF_VERSION=${TRF_VERSION:-404}
+  export REPBASE_VER=${REPBASE_VER:-20170127}
 
   # Get build dependencies
   apt-get update \
