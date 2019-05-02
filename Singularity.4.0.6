@@ -21,7 +21,6 @@ From: debian:stretch
   export TRF_VERSION=${TRF_VERSION:-404}
   export REPBASE_VER=${REPBASE_VER:-20170127}
   export RMBLAST_DIR=/usr/local/rmblast-${RMB_VERSION}/
-  export DEFAULT_SEARCH_ENGINE=ncbi
 
   # Get build dependencies
   apt-get update \
@@ -76,7 +75,7 @@ From: debian:stretch
     && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  perl ./configure
+  perl ./configure <<< $'\n\n\n2\n'
 
   ## Clean up from source install
   cd / \
