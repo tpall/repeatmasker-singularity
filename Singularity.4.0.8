@@ -3,10 +3,10 @@ From: debian:stretch
 
 %labels
   Maintainer tpall
-  RM_Version 4.0.6
+  RM_Version 4.0.8
   RMBlast Version 2.9.0
-  TRF Version 4.04
-  Repbase_Version 20170127
+  TRF Version 4.09
+  Repbase_Version 20181026
 
 %apprun RepeatMasker
   exec /usr/local/RepeatMasker/RepeatMasker "${@}"
@@ -16,11 +16,10 @@ From: debian:stretch
 
 %post
   # Software versions
-  export RM_VERSION=${RM_VERSION:-4.0.6}
+  export RM_VERSION=${RM_VERSION:-4.0.8}
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
-  export TRF_VERSION=${TRF_VERSION:-404}
-  export REPBASE_VER=${REPBASE_VER:-20170127}
-  export RMBLAST_DIR=/usr/local/rmblast-${RMB_VERSION}/
+  export TRF_VERSION=${TRF_VERSION:-409}
+  export REPBASE_VER=${REPBASE_VER:-20181026}
 
   # Get build dependencies
   apt-get update \
@@ -75,7 +74,7 @@ From: debian:stretch
     && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  perl ./configure <<< $'\n\n\n2\n'
+  perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
 
   ## Clean up from source install
   cd / \
