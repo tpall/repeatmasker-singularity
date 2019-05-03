@@ -17,7 +17,7 @@ From: quay.io/biocontainers/repeatmasker:4.0.8--pl526_14
 
   ## Download and setup RepBase RepeatMasker Edition
   cd /tmp \
-    && wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
+    && wget -q --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   cp /tmp/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/share/RepeatMasker/ \
     && cd /usr/local/share/RepeatMasker \
     && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
