@@ -14,16 +14,6 @@ From: quay.io/biocontainers/repeatmasker:4.0.8--pl526_14
   # Configure default locale
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
-
-  ## Download and setup RepBase RepeatMasker Edition
-  cd /tmp \
-    && wget -q --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
-  cp /tmp/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/share/RepeatMasker/ \
-    && cd /usr/local/share/RepeatMasker \
-    && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
-    && tar xvf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm /tmp/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   
   ## Run Configure Script
   perl ./configure
