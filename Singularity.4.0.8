@@ -6,52 +6,7 @@ From: quay.io/biocontainers/repeatmasker:4.0.8--pl526_14
   RM_Version 4.0.8
   Repbase_Version 20181026
 
-%apprun RepeatMasker
-  exec /usr/local/RepeatMasker/RepeatMasker "${@}"
-
-%runscript
-  exec /usr/local/RepeatMasker/RepeatMasker "${@}"
-
 %post
   # Software versions
   export RM_VERSION=${RM_VERSION:-4.0.8}
   export REPBASE_VER=${REPBASE_VER:-20181026}
-
-  # Get build dependencies
-  apt-get update \
-    && apt-get install -y --no-install-recommends wget build-essential locales
-  
-  # Configure default locale
-  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-  locale-gen en_US.utf8
-  /usr/sbin/update-locale LANG=en_US.UTF-8
-  export LC_ALL=en_US.UTF-8
-  export LANG=en_US.UTF-8
-
-  # Configure term
-  export TERM=xterm
-
-  # Install cpanm
-  wget -O - http://cpanmin.us | perl - --self-upgrade
-  
-  # Install the Text::Soundex module via cpan:
-  cpanm Text::Soundex
-
-  ## Download and setup RepBase RepeatMasker Edition
-  wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
-  cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
-  cd /usr/local/RepeatMasker \
-    && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
-    && tar xvf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
-
-  ## Run Configure Script
-  perl ./configure
-  
-  ## Clean up from source install
-  cd / \
-  && rm -rf /tmp/* \
-  && apt-get autoremove -y \
-  && apt-get autoclean -y \
-  && rm -rf /var/lib/apt/lists/* 
