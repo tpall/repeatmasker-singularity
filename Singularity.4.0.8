@@ -16,7 +16,8 @@ From: quay.io/biocontainers/repeatmasker:4.0.8--pl526_14
   export LANG=en_US.UTF-8
   
   ## Run Configure Script
-  perl ./configure
+  cd /usr/local/share/RepeatMasker/ \
+    && perl ./configure
 
   ## Clean up from source install
   cd / \
