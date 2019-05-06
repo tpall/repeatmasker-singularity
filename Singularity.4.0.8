@@ -68,7 +68,9 @@ From: debian:stretch
   ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
 
   ## Download and setup private copy of RepBase RepeatMasker Edition
-  ssh-keyscan -H ${SSH_HOST} >> $HOME/.ssh/known_hosts
+  mkdir $HOME/.ssh \
+    && chmod 0700 $HOME/.ssh \
+    && ssh-keyscan -H ${SSH_HOST} >> $HOME/.ssh/known_hosts
   scp -r ${DEPLOY_USER}@${SSH_HOST}:~/databases/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker
   cd /usr/local/RepeatMasker \
     && tar zxf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
