@@ -58,9 +58,8 @@ From: debian:stretch
   wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
-    && gunzip RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
-    && tar xvf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar \
-    && rm RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar
+    && tar -xvzf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
+    && rm RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
 
   ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
 
@@ -68,13 +67,12 @@ From: debian:stretch
   wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
   cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
   cd /usr/local/RepeatMasker \
-    && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
-    && tar xvf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
+    && tar -xvzf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
     && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  wget -nv --no-check-certificate https://raw.githubusercontent.com/rmhubley/RepeatMasker/master/configure \
+  rm configure \
+    && wget -nv --no-check-certificate https://raw.githubusercontent.com/rmhubley/RepeatMasker/master/configure \
     && perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
 
   ## Clean up from source install
