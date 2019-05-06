@@ -23,6 +23,8 @@ From: debian:stretch
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
   export TRF_VERSION=${TRF_VERSION:-409}
   export REPBASE_VER=${REPBASE_VER:-20181026}
+  RM_OTHER_PROGRAMS="DateRepeats DupMasker ProcessRepeats RepeatProteinMask util/queryRepeatDatabase.pl util/queryTaxonomyDatabase.pl util/rmOutToGFF3.pl util/calcDivergenceFromAlign.pl util/createRepeatLandscape.pl util/dupliconToSVG.pl util/getRepeatMaskerBatch.pl util/rmOut2Fasta.pl util/trfMask util/rmToUCSCTables.pl"
+  export RM_OTHER_PROGRAMS
 
   # Get build dependencies
   apt-get update \
@@ -69,6 +71,12 @@ From: debian:stretch
     && rm RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
 
   ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
+
+  chmod a+x /usr/local/bin/RepeatMasker
+  
+  for name in ${RM_OTHER_PROGRAMS} ; do
+    ln -s /usr/local/bin/RepeatMasker /usr/local/bin/$(basename $name)
+  done
 
   ## Setup RepBase RepeatMasker Edition
   cp /tmp/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker \
