@@ -20,7 +20,7 @@ install:
 - "./configure --prefix=/usr/local"
 - make && sudo make install
 - cd ..
-- echo 'rocket.hpc.ut.ee,193.40.12.243 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDKGb763AN3baZ6ZvyEqnT2jYCMzLjmK+aJVfMCZt/Wh3WE8tMqiGESKzEzpx1ZLX6/XA29po7/JKJEKkvD/CQE=' >> $HOME/.ssh/known_hosts
+- ssh-keyscan -H ${SSH_HOST} >> $HOME/.ssh/known_hosts
 before_script:
 - sudo singularity build $SINGULARITY_IMAGE $SPEC
 - chmod +x run_tests.sh
@@ -38,6 +38,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: scp -r $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@rocket.hpc.ut.ee:~/simg/repeatmasker$(echo $SPEC | tr -dc '0-9').simg
+  script: scp -r $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@${SSH_HOST}:~/simg/repeatmasker$(echo $SPEC | tr -dc '0-9').simg
   on:
     branch: master
