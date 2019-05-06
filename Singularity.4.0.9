@@ -14,9 +14,14 @@ From: debian:stretch
 %runscript
   exec /usr/local/RepeatMasker/RepeatMasker "${@}"
 
+%files
+  RepBaseRepeatMaskerEdition-20181026.tar.gz /tmp
+  test/seqs/small-1.fa /tmp
+  test/seqs/small-2.fa /tmp
+
 %post
   # Software versions
-  export RM_VERSION=${RM_VERSION:-4.0.9.p1}
+  export RM_VERSION=${RM_VERSION:-4.0.9.p2}
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
   export TRF_VERSION=${TRF_VERSION:-409}
   export REPBASE_VER=${REPBASE_VER:-20181026}
@@ -55,7 +60,7 @@ From: debian:stretch
     && chmod +x /usr/local/bin/trf
 
   ## Download and install RepeatMasker
-  wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
+  wget -nv http://www.repeatmasker.org/~rhubley/RepeatMasker-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
     && gunzip RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
@@ -64,17 +69,20 @@ From: debian:stretch
 
   ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
 
-  ## Download and setup RepBase RepeatMasker Edition
-  wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
-  cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
-  cd /usr/local/RepeatMasker \
-    && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
-    && tar xvf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
+  ## Setup RepBase RepeatMasker Edition
+  cp /tmp/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker \
+    && cd /usr/local/RepeatMasker \
+    && tar zxf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
+    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
+  rm configure \
+    && wget -nv --no-check-certificate https://raw.githubusercontent.com/rmhubley/RepeatMasker/master/configure \
+    && perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
+  
+  ## Run RM twice
+  /usr/local/bin/RepeatMasker /tmp/small-1.fa
+  /usr/local/bin/RepeatMasker /tmp/small-2.fa
 
   ## Clean up from source install
   cd / \
