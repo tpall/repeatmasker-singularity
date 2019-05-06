@@ -15,14 +15,15 @@ From: debian:stretch
   exec /usr/local/RepeatMasker/RepeatMasker "${@}"
 
 %files
-  RepBaseRepeatMaskerEdition-20170127.tar.gz /tmp
+  RepBaseRepeatMaskerEdition-20181026.tar.gz /tmp
+  test/seqs/small-1.fa /tmp
 
 %post
   # Software versions
-  export RM_VERSION=${RM_VERSION:-4.0.6}
+  export RM_VERSION=${RM_VERSION:-4.0.8}
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
   export TRF_VERSION=${TRF_VERSION:-409}
-  export REPBASE_VER=${REPBASE_VER:-20170127}
+  export REPBASE_VER=${REPBASE_VER:-20181026}
 
   # Get build dependencies
   apt-get update \
@@ -81,6 +82,9 @@ From: debian:stretch
   rm configure \
     && wget -nv --no-check-certificate https://raw.githubusercontent.com/rmhubley/RepeatMasker/master/configure \
     && perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
+  
+  ## Run RM once
+  /usr/local/bin/RepeatMasker /tmp/small-1.fa
 
   ## Clean up from source install
   cd / \

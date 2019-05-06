@@ -26,7 +26,7 @@ install:
 - make && sudo make install
 - cd ..
 - ssh-keyscan -H ${SSH_HOST} >> $HOME/.ssh/known_hosts
-- scp -r ${DEPLOY_USER}@${SSH_HOST}:~/${REPBASE_PATH}/RepBaseRepeatMaskerEdition-20170127.tar.gz .
+- scp -r ${DEPLOY_USER}@${SSH_HOST}:~/${REPBASE_PATH}/RepBaseRepeatMaskerEdition-20181026.tar.gz .
 before_script:
 - sudo singularity build $SINGULARITY_IMAGE $SPEC
 - chmod +x run_tests.sh
