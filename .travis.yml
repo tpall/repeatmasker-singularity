@@ -26,7 +26,7 @@ install:
 - make && sudo make install
 - cd ..
 - ssh-keyscan -H ${SSH_HOST} >> $HOME/.ssh/known_hosts
-- scp -r ${DEPLOY_USER}@${SSH_HOST}:${REPBASE_PATH}/RepBaseRepeatMaskerEdition-20181026.tar.gz .
+- scp -r ${DEPLOY_USER}@${SSH_HOST}:~/${REPBASE_PATH}/RepBaseRepeatMaskerEdition-20181026.tar.gz .
 before_script:
 - sudo singularity build $SINGULARITY_IMAGE $SPEC
 - chmod +x run_tests.sh
@@ -44,6 +44,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: scp -r $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@${SSH_HOST}:${DEPLOY_PATH}/repeatmasker$(echo $SPEC | tr -dc '0-9').simg
+  script: scp -r $TRAVIS_BUILD_DIR/$SINGULARITY_IMAGE ${DEPLOY_USER}@${SSH_HOST}:~/${DEPLOY_PATH}/repeatmasker$(echo $SPEC | tr -dc '0-9').simg
   on:
     branch: master
