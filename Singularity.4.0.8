@@ -45,7 +45,7 @@ From: debian:stretch
   cd /tmp
   wget -nv http://www.repeatmasker.org/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
   cd /usr/local \
-    && tar zxvf /tmp/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
+    && tar zxf /tmp/rmblast-${RMB_VERSION}+-x64-linux.tar.gz
 
   ## Download TRF
   cd /tmp
@@ -58,17 +58,16 @@ From: debian:stretch
   wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
-    && tar -xvzf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
+    && tar zxf RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
     && rm RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
 
   ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
 
-  ## Download and setup RepBase RepeatMasker Edition
-  wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
-  cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
+  ## Download and setup private copy of RepBase RepeatMasker Edition
+  scp -r ${DEPLOY_USER}@rocket.hpc.ut.ee:~/databases/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker
   cd /usr/local/RepeatMasker \
-    && tar -xvzf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
-    && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
+    && tar zxf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
+    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
   rm configure \
