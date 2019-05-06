@@ -74,7 +74,7 @@ From: debian:stretch
     && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  wget -nv https://raw.githubusercontent.com/rmhubley/RepeatMasker/master/configure \
+  wget -nv --no-check-certificate https://raw.githubusercontent.com/rmhubley/RepeatMasker/master/configure \
     && perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
 
   ## Clean up from source install
