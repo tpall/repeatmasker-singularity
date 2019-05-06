@@ -28,7 +28,7 @@ install:
 - ssh-keyscan -H ${SSH_HOST} >> $HOME/.ssh/known_hosts
 - scp -r ${DEPLOY_USER}@${SSH_HOST}:~/${REPBASE_PATH}/RepBaseRepeatMaskerEdition-20181026.tar.gz .
 before_script:
-- sudo singularity build $SINGULARITY_IMAGE $SPEC
+- sudo singularity build --writable $SINGULARITY_IMAGE $SPEC
 - chmod +x run_tests.sh
 script: "./run_tests.sh"
 notifications:

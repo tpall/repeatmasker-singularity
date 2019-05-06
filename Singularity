@@ -14,6 +14,9 @@ From: debian:stretch
 %runscript
   exec /usr/local/RepeatMasker/RepeatMasker "${@}"
 
+%files
+  RepBaseRepeatMaskerEdition-20181026.tar.gz /tmp
+
 %post
   # Software versions
   export RM_VERSION=${RM_VERSION:-4.0.9.p1}
@@ -64,14 +67,11 @@ From: debian:stretch
 
   ln -s /usr/local/RepeatMasker/RepeatMasker /usr/local/bin/RepeatMasker
 
-  ## Download and setup RepBase RepeatMasker Edition
-  wget -nv --user $GIRUSER --password $GIRPASS --no-check-certificate https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
-  cp RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker/
-  cd /usr/local/RepeatMasker \
-    && gunzip RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
-    && tar xvf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar \
-    && rm /usr/local/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
+  ## Setup RepBase RepeatMasker Edition
+  cp /tmp/RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz /usr/local/RepeatMasker \
+    && cd /usr/local/RepeatMasker \
+    && tar zxf RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz \
+    && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
   perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
