@@ -6,6 +6,7 @@ Built images can be downloaded from Zenodo.
 
 ## Usage
 
+Command line:
 ```
-singularity exec /path/to/singularity409.simg /usr/local/bin/RepeatMasker test/seqs/small-1.fa
+singularity exec /path/to/repeatmasker409.simg /usr/local/bin/RepeatMasker test/seqs/small-1.fa
 ```
