@@ -60,7 +60,7 @@ From: debian:stretch
     && chmod +x /usr/local/bin/trf
 
   ## Download and install RepeatMasker
-  wget -nv http://www.repeatmasker.org/~rhubley/RepeatMasker-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
+  wget -nv http://www.repeatmasker.org/RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz
   cp RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz /usr/local/
   cd /usr/local/ \
     && gunzip RepeatMasker-open-$(echo $RM_VERSION | sed -e 's/\./\-/g').tar.gz \
