@@ -16,10 +16,12 @@ From: debian:stretch
 
 %files
   RepBaseRepeatMaskerEdition-20181026.tar.gz /tmp
+  test/seqs/small-1.fa /tmp
+  test/seqs/small-2.fa /tmp
 
 %post
   # Software versions
-  export RM_VERSION=${RM_VERSION:-4.0.9.p1}
+  export RM_VERSION=${RM_VERSION:-4.0.9.p2}
   export RMB_VERSION=${RMB_VERSION:-2.9.0}
   export TRF_VERSION=${TRF_VERSION:-409}
   export REPBASE_VER=${REPBASE_VER:-20181026}
@@ -74,7 +76,13 @@ From: debian:stretch
     && rm RepBaseRepeatMaskerEdition-${REPBASE_VER}.tar.gz
 
   ## Run Configure Script
-  perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
+  rm configure \
+    && wget -nv --no-check-certificate https://raw.githubusercontent.com/rmhubley/RepeatMasker/master/configure \
+    && perl ./configure --trfbin=/usr/local/bin/trf --rmblastbin=/usr/local/rmblast-${RMB_VERSION}/
+  
+  ## Run RM twice
+  /usr/local/bin/RepeatMasker /tmp/small-1.fa
+  /usr/local/bin/RepeatMasker /tmp/small-2.fa
 
   ## Clean up from source install
   cd / \

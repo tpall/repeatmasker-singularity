@@ -6,6 +6,7 @@ echo "Using Singularity image: ${SINGULARITY_IMAGE}"
 set -x
 set -e
 
+# These tests fail in travis-ci
 #singularity exec ${SINGULARITY_IMAGE} /usr/local/bin/RepeatMasker test/seqs/small-1.fa
 #singularity exec ${SINGULARITY_IMAGE} /usr/local/bin/RepeatMasker test/seqs/small-2.fa
 
