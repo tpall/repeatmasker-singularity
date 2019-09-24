@@ -1,5 +1,5 @@
 BootStrap: docker
-From: taavipall/repeatmasker-image
+From: taavipall/repeatmasker-image:conda
 
 %labels
   Maintainer tpall
